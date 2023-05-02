@@ -1,0 +1,224 @@
+	WINDOWS
+ncpa.cpl -> Show the network conections
+
+netsh
+wlan show profile
+wlan show profile "Name" key = clear 
+
+---------------------------------------------------------
+	LINUX
+/var/lib/postgresql/11/main/
+
+/var/lib/postgresql/11/main/base/16385
+
+
+pg_filenode.map /var/lib/postgresql/11/main/base/16385
+
+
+sudo du home/
+
+ps -u (Proccess)
+top
+htop
+
+kill -9 [PID del proceso]
+killall Firefox
+
+
+sudo fdisk -l
+vgdisplay
+
+
+ESXTOP
+https://www.virten.net/vmware/esxtop/
+
+ps aux  (All procces)
+df    	(Routes with % of storage)
+df -h  	(Storage used)
+df -m  	(Storage of file MB)
+du file (storage of every file of the binder)
+du -h /var/log/ 
+free -h (Memory space)
+lsblk -f (Storage on partitions)
+parted /dev/sda print(see partitions size)
+
+timedatectl
+last -x reboot
+last -x shutdown
+uptime -p
+
+----
+mv pg_filenode.map /var/lib/postgresql/11/main/base/16385
+
+
+sudo nano postgresql-11-main.log
+
+ps -ef | grep postgres
+
+systemctl status postgresql.service
+service postgresql status
+sudo service postgresql restart
+
+postgres --version
+----
+# su postgres
+
+psql -h 172.16.200. -U postgres -d zabbix
+
+sudo find /var/run/postgresql/.s.PGSQL.5432
+
+sudo -u postgres psql
+
+cd ~/.local/share/Trash/files
+
+SELECT pg_database.datname, pg_size_pretty(pg_database_size(pg_database.datname)) AS size FROM pg_database;g
+
+-------------------------------------------------------
+sudo nano /etc/sudoers
+root    ALL=(ALL:ALL) ALL
+
+
+tail -n 500 /var/log/postgresql/postgresql-9.4-main.log
+------------------------------------------------------------
+-Use Netcat
+For local terminal:
+nc -l -p 4444
+nc localhost 4444
+For other mahines:
+Recepetor: nc -l -p 4444
+Transmitter: nc -n ipreceptor 4444
+
+WITH FILES
+R: nc -vl -p 4444 > nombre_del_archivo_a_recibir
+T: nc -n ipreceptor 4444 < /ruta/del/archivo/a/enviar/nombreincluido
+
+EXAMPLE:
+R: nc -vl -p 4444 > PG_VERSION
+T:nc -n 172.16.200. 4444 < /var/lib/postgresql/11/main/base/16385/PG_VERSION
+
+
+-------------------------------------------------------------------
+	MY_ENV
+
+since --> /home/noc/environments
+source my_env/bin/activate	
+
+----------------------------------------------------------------
+
+	MTU (Maximun transmission Unit)
+
+enable
+usuario: hdesk pss: .pssw
+enable :.pssw
+conf t
+system mtu 1500
+do wr
+
+++++ 
+do show run
+no mtu 896
+
+reload
+
+sh | run include mtu
+
+exit
+sh int g1/1	
+
+
+-------------------------------------------------------------------------------------------------
+	Queries PSQL
+
+1. Conectarse a Postgres con el usuario admin o root
+$ sudo -u postgres psql
+2. Listar BD
+\l
+3. Usar/Seleccionar una base datos
+\c dbname;
+4. Listar tablas
+\dt
+5. Crear base datos
+CREATE DATABASE dbname OWNER username;
+6. Eliminar base datos
+DROP DATABASE dbname;
+7. Importar una base datos
+$ psql username  -h hostname -d dbname < dump.sql
+8. Crear usuario
+CREATE USER username WITH PASSWORD 'MYPASS';
+9. Conectarse a la base datos con el usuario creado
+$ psql -U usuario -h 127.0.0.1 -d basedatos
+Para conectarnos a la base datos desde un dispositivo diferente al servidor de base datos debemos modificar los ficheros: postgresql.conf y pg_hba.conf.
+
+En el fichero postgresql.conf buscamos la directiva listen_address y agregamos las direcciones IPs en las cuales el servidor de base datos va a recibir conexiones, por ejemplo:
+
+listen_addresses = 'localhost, 192.168.100.29'
+El fichero pg_hba.conf también controla el acceso al servidor Postgres, buscamos la sección: IPv4 local connections y agregamos nuestra regla, por ejemplo:
+
+# TYPE  DATABASE        USER            ADDRESS             METHOD
+host    all             all         192.168.100.1/24        md5
+Con la regla anterior establecemos que cualquier usuario se puede conectar a cualquier base de datos desde nuestra red de area local: 192.168.100.1/24, si queremos restringir el acceso a un solo usuario y a una base datos lo podemos hacer de la siguiente manera:
+
+host    basedatos             usuario         192.168.100.1/24        md5
+10. Establecer super privelegios
+ALTER USER username WITH SUPERUSER;
+11. Listar usuarios
+\du
+12. Eliminar usuario
+DROP USER nomusr
+13. Obteniendo ayuda
+\?
+o
+
+\h
+14. Salir de la consola de Postgres
+\q
+
+
+----------------------------------
+	ZABBIX
+
+service zabbix-agent status
+
+LogFile= /var/log/zabbix/zabbix_agentd.log
+.conf= /etc/zabbix
+
+
+--------------------------------------------
+	Configuracion de MicroTik RouteBoard
+
+/certificate
+add name=root-cert common-name=MyRouter days-valid=3650 key-usage=key-cert-sign,crl-sign
+sign root-cert
+add name=https-cert common-name=MyRouter days-valid=3650
+sign ca=root-cert https-cert
+/ip service
+set www-ssl certificate=https-cert disabled=no
+set www disabled=yes
+
+--------------------------------------------
+	Raspberry Pi
+
+sudo apt-get update
+sudo apt-get upgrade
+
+raspi-config
+startx : Entrar a GUI desde raspi-config
+sudo init 0: Turn off
+sudo find *.py
+sudo find -D *.py
+
+screenfetch
+sudo apt-get install -y realvnc-vnc-server realvnc-vnc-viewer
+Descargar VNC viewer
+
+****	Raspberry leds
+40 Pines: De alimentacion / Pines que pueden ser configurados como entradas y como salidas y pines que pueden ser configurados para establecer algun tipo de comunicacion
+Configurar pines de raspberry en 1 de modos: Wiring o BCM
+sudo nano control_pines.py --- chmod 777 --- open with default text editor --- paste code & save --- en GUI open Tonny Python the file --- 
+
+***	Relay (Relevador de 4 canales)
+El Módulo Relé de 4 Canales, es un dispositivo que se usa por lo general para el control o Switcheo de cargas de potencia
+Compuesto por una bobina - 1 pin de entrada, 2 de salida: Cerrado, CComun, CA
+Optoacoplador + Transistor de potencia: Ayudan a que pueda activarse con muy poca corriente
+Diodo: Funciona como proteccion para que no regrese el voltaje ni la corriente cuando se desmagnetice
+Los modulos son inversos: Cuando se envia un 1 logico (HIGH) lo desactiva y con 0 logico (LOW) se activa

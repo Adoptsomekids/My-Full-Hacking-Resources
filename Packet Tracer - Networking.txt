@@ -1,4 +1,4 @@
-	**Curso/Tutoriales de Redes en Español [Cisco Packet Tracer 7 y GNS3]**
+	*Cisco Packet Tracer 7 y GNS3]*
 
 01 - Creación y Configuración de Red Basica en Packet Tracer [Packet Tracer 7.0 - Español]
 -----------------------------------------------------------------------------------------------

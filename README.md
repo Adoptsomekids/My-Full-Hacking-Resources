@@ -2,9 +2,10 @@
   ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
   ![Kali](https://img.shields.io/badge/Kali-268BEE?style=for-the-badge&logo=kalilinux&logoColor=white)
   ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+  ![Cisco](https://img.shields.io/badge/cisco-%23049fd9.svg?style=for-the-badge&logo=cisco&logoColor=black)
   
   
-_Ésta es mi recopilación personal de recursos utilizados en entornos prácticos: Comandos de Linux / Powershell / WSL, CTF, herramientas de hacking (pentesting, phishing, cracking, poisoning, spoofing, sniffing), gestión de servidores, etc. :)_
+_Ésta es mi recopilación personal de recursos utilizados en entornos prácticos: Comandos de Linux / Powershell / WSL, CTF, herramientas de hacking (pentesting, phishing, cracking, poisoning, spoofing, sniffing), gestión de servidores, networking, etc. :)_
 
 ## Comenzando 🚀
 

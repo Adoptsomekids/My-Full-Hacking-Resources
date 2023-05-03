@@ -4,7 +4,7 @@
   ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
   
   
-_Recopilación de recursos personales utilizados en entornos prácticos: Comandos de Linux / Powershell / WSL, CTF, herramientas de pentesting, servidores, ETC_
+_Ésta es mi recopilación personal de recursos utilizados en entornos prácticos: Comandos de Linux / Powershell / WSL, CTF, herramientas de pentesting, servidores, ETC_
 
 ## Comenzando 🚀
 

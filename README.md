@@ -1,4 +1,4 @@
-![HTB Linux pissing](https://user-images.githubusercontent.com/83385717/236990861-3e8efd04-23c7-4160-a9bd-dc5de376c481.png)
+![HTB Linux pissing - copia](https://user-images.githubusercontent.com/83385717/236991358-965f5556-31c2-4417-b494-ba2aa0745806.png)
 
 
 # Full hacking resources and commands :)

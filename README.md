@@ -28,8 +28,17 @@ _Que cosas necesitas para instalar las herramientas y como instalarlas_
 ...
 ```
 
-## Expresiones de Gratitud 🎁
+## Construido con 🛠️
 
-* Comenta a otros sobre este proyecto 📢
+* [Visual Studio Code](https://code.visualstudio.com/) - Editor de Código
+* [TypeScript](https://www.typescriptlang.org/) - Programming language
+* [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - Programming language
+* [HTML](https://html.com/document/) - Programación web
 
 
+## Autor ✒️
+
+* **Emilio Josafat Giacomo Quintero** - *Desarrollo* - [Adoptsomekids](https://github.com/Adoptsomekids)
+
+---
+⌨️ con ❤️ por [Adoptsomekids](https://github.com/Adoptsomekids) 😸
